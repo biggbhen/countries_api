@@ -1,16 +1,15 @@
 'use client';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import Filter from '../filter/filter';
 import Card from './card';
 import { FeatureSelector } from '../feature/selector';
-import { AppDispatch } from '../feature/store';
-import { useDispatch, useSelector } from 'react-redux';
+
+import { useSelector } from 'react-redux';
 
 type Props = {};
 
 const CountrySection = (props: Props) => {
 	const selector = useSelector(FeatureSelector);
-	const dispatch = useDispatch<AppDispatch>();
 
 	const [data, setData] = useState<any>([]);
 	const [filterText, setFilterText] = useState<string>('');
@@ -48,22 +47,22 @@ const CountrySection = (props: Props) => {
 		// eslint-disable-next-line
 	}, [filterText, searchText]);
 
-	// console.log(searchText);
-
 	return (
 		<div>
 			<Filter getFilterText={getFilterText} getSearchText={getSearchText} />
-			<div className='mt-8 grid lsm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6 py-[1rem] px-[2rem] md:px-[3rem]'>
-				{selector.loading === true ? (
-					<h2>loading</h2>
-				) : data.length > 0 ? (
-					data.map((item: any, ind: React.Key) => (
+			{selector.loading === true ? (
+				<div className='flex justify-center min-h-[50vh] items-center'>
+					<span className='loader'></span>
+				</div>
+			) : data.length > 0 ? (
+				<div className='mt-8 grid lsm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6 py-[1rem] px-[2rem] md:px-[3rem]'>
+					{data.map((item: any, ind: React.Key) => (
 						<Card key={ind} item={item} />
-					))
-				) : selector.loading === false && !selector?.countries ? (
-					<h2>type in a valid search</h2>
-				) : null}
-			</div>
+					))}
+				</div>
+			) : selector.loading === false && !selector?.countries ? (
+				<h2>type in a valid search</h2>
+			) : null}
 		</div>
 	);
 };

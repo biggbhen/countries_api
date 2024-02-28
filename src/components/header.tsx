@@ -3,15 +3,11 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from './feature/store';
 
 type Props = {};
 
 const AppHeader = (props: Props) => {
-	const [theme, setTheme] = useState('dark');
 	const [darkMode, setDarkMode] = useState(true);
-	const dispatch = useDispatch<AppDispatch>();
 
 	const handleclick = () => {
 		setDarkMode(!darkMode);
