@@ -6,6 +6,7 @@ interface RootState {
 	loading: boolean;
 	error: any;
 	countries: any[];
+	country: any[];
 }
 
 const initialState: RootState = {
@@ -13,6 +14,7 @@ const initialState: RootState = {
 	loading: true,
 	error: null,
 	countries: [],
+	country: [],
 };
 
 export const getAllCountries = createAsyncThunk(
@@ -20,6 +22,25 @@ export const getAllCountries = createAsyncThunk(
 	async (payload, { rejectWithValue }) => {
 		try {
 			const response = await axios.get(`https://restcountries.com/v2/all`);
+
+			if (response.status && response.status === 200) {
+				return response.data;
+			}
+
+			return rejectWithValue(response.data);
+		} catch (error) {
+			return rejectWithValue(error);
+		}
+	}
+);
+
+export const getSingleCountry = createAsyncThunk(
+	'get/country',
+	async (payload: any, { rejectWithValue }) => {
+		try {
+			const response = await axios.get(
+				`https://restcountries.com/v2/name/${payload.name}`
+			);
 
 			if (response.status && response.status === 200) {
 				return response.data;
@@ -54,6 +75,26 @@ const featureSlice = createSlice({
 			)
 			.addCase(
 				getAllCountries.rejected,
+				(state, action: PayloadAction<any>) => {
+					state.loading = false;
+					state.error = action.payload;
+				}
+			)
+			.addCase(
+				getSingleCountry.pending,
+				(state, action: PayloadAction<any>) => {
+					state.loading = true;
+				}
+			)
+			.addCase(
+				getSingleCountry.fulfilled,
+				(state, action: PayloadAction<any>) => {
+					state.country = action.payload;
+					state.loading = false;
+				}
+			)
+			.addCase(
+				getSingleCountry.rejected,
 				(state, action: PayloadAction<any>) => {
 					state.loading = false;
 					state.error = action.payload;

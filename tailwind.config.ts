@@ -17,10 +17,12 @@ const config: Config = {
 		},
 		screens: {
 			xxsm: '280px',
+			lxsm: '450px',
 			lsm: '500px',
 			xsm: '550px',
 			sm: '640px',
 			md: '768px',
+			xmd: '900px',
 			lg: '1024px',
 			xlg: '1150px',
 			sxl: '1200px',
@@ -29,6 +31,6 @@ const config: Config = {
 		},
 	},
 	plugins: [],
-	// darkMode: 'class',
+	darkMode: 'class',
 };
 export default config;

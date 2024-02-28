@@ -10,7 +10,7 @@ const Card = ({ item }: { item: any }) => {
 				href={`/country/${name}`}
 				className='text-[#111517] dark:text-white'>
 				<div className=' h-[7.5rem] relative'>
-					<Image src={flag} alt='flag' layout='fill' objectFit='cover' />
+					<Image src={flag} alt='flag' fill priority />
 				</div>
 				<div className='p-[10px]'>
 					<h2 className='text-sm mb-2 text-[#111517] dark:text-white'>

@@ -1,24 +1,31 @@
 'use client';
 import React, { useState } from 'react';
 
-type Props = {};
+type Props = {
+	getFilterText: (value: string) => void;
+	getSearchText: (value: string) => void;
+};
 
-const Filter = (props: Props) => {
+const Filter: React.FC<Props> = ({ getFilterText, getSearchText }) => {
 	const [selectText, setSelectText] = useState('');
+	const [search, setSearch] = useState('');
 	const [modal, setModal] = useState(false);
 
 	const handleModal = () => {
-		if (modal) {
-			setModal(false);
-		} else {
-			setModal(true);
-		}
+		setModal(!modal);
 	};
 
-	const innerOption = (e: { target: any; preventDefault: () => void }) => {
+	const innerOption = (e: React.MouseEvent<HTMLLIElement>) => {
 		e.preventDefault();
-		setSelectText(e.target.innerText);
+		const text = e.currentTarget.innerText;
+		setSelectText(text);
+		getFilterText(text);
 		setModal(false);
+	};
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearch(e.target.value);
+		getSearchText(e.target.value);
 	};
 
 	const filterItems = ['All', 'Africa', 'America', 'Asia', 'Europe', 'Oceania'];
@@ -31,6 +38,7 @@ const Filter = (props: Props) => {
 					name='text'
 					placeholder='Search for a country'
 					className='max-w-[18.5rem] w-[90%] py-[0.65rem] px-[2rem] text-[0.8rem] border-0 outline-0 rounded-[5px] bg-[#ffffff] text-[#111517] dark:bg-[#2b3945] dark:text-white shadow-md'
+					onChange={(e) => handleChange(e)}
 				/>
 				<ul className='relative w-[8.5rem] rounded-[5px] bg-[#ffffff] text-[#111517] dark:bg-[#2b3945] dark:text-white shadow-md list-none text-[0.8rem] z-30'>
 					<li

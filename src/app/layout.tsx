@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className='dark:bg-[#202c37] bg-[#fafafa]'>
+			<body className='dark:bg-[#202c37] bg-[#fafafa] '>
 				<Providers>
 					<AppHeader />
 					{children}

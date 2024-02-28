@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 
 // feature Selector
 export const feat = (state: { feature: any }) => state.feature;
